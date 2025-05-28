@@ -1,5 +1,7 @@
 import ImageCaptioner from "./ImageCaptioner";
 
-export function generateCaption(imgSrc) {
-  return ImageCaptioner.generateCaption(imgSrc);
+const imageCaptioner = new ImageCaptioner();
+
+export async function generateCaption(imgSrc) {
+  return await imageCaptioner.generateCaption(imgSrc);
 }
