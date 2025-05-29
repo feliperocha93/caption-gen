@@ -1,17 +1,20 @@
 import { useState } from "react";
 import "./App.css";
-import { generateCaption } from "./models/api";
+import { generateCaption, translate } from "./models/api";
 
 function App() {
   const [imgSrc, setImgSrc] = useState(null);
-  const [caption, setCaption] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [caption, setCaption] = useState("<Caption>");
+  const [translatedCaption, setTranslatedCaption] = useState("<Legenda>");
 
   async function addCaption() {
-    setLoading(true);
+    setCaption("Generating caption...");
     const caption = await generateCaption(imgSrc);
     setCaption(caption);
-    setLoading(false);
+
+    setTranslatedCaption("Gerando legenda...");
+    const translatedCaption = await translate(caption, "pt-BR");
+    setTranslatedCaption(translatedCaption);
   }
 
   return (
@@ -19,17 +22,14 @@ function App() {
       <h1>Caption Generator</h1>
       <div className="url-form">
         <input onChange={(e) => setImgSrc(e.target.value)} />
-        <button
-          type="button"
-          onClick={addCaption}
-          disabled={!imgSrc || loading}
-        >
+        <button type="button" onClick={addCaption} disabled={!imgSrc}>
           Generate
         </button>
       </div>
       <div className="caption-image">
-        <img src={imgSrc} height={200} alt="To be generated caption" />
-        <span>{loading ? "Loading..." : caption}</span>
+        <img src={imgSrc} height={200} />
+        <span>{caption}</span>
+        <span>{translatedCaption}</span>
       </div>
     </>
   );
