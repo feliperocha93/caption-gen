@@ -6,7 +6,7 @@ export async function generateCaption(imgSrc) {
   return await imageCaptioner.generateCaption(imgSrc);
 }
 
-export async function translate(text, targetLanguage) {
+export async function translate(text, targetLanguage = "por_Latn") {
   const response = await fetch("http://localhost:3000/translate", {
     method: "POST",
     headers: {

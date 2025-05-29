@@ -13,7 +13,7 @@ function App() {
     setCaption(caption);
 
     setTranslatedCaption("Gerando legenda...");
-    const translatedCaption = await translate(caption, "pt-BR");
+    const translatedCaption = await translate(caption, "por_Latn");
     setTranslatedCaption(translatedCaption);
   }
 
