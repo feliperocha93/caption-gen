@@ -1,8 +1,8 @@
 from flask import Flask, request, send_from_directory
 from flask_cors import cross_origin
 
-from text_to_speech.models.api import convert_text_to_speech
-from text_to_speech.utils import save_audio
+from .models.api import convert_text_to_speech
+from .utils import save_audio
 
 from uuid import uuid4
 
