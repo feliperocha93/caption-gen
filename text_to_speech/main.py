@@ -1,4 +1,5 @@
 from flask import Flask, request, send_from_directory
+from flask_cors import cross_origin
 
 from text_to_speech.models.api import convert_text_to_speech
 from text_to_speech.utils import save_audio
@@ -12,12 +13,13 @@ def hello_world():
     return "Hello, World!"
 
 @app.route("/text-to-speech", methods=["POST"])
+@cross_origin()
 def text_to_speech():
     text = request.json["text"]
     audio, sample_rate = convert_text_to_speech(text)
     file_id = uuid4()
     save_audio(audio, sample_rate, file_id)
-    return f"/audio/{file_id}.wav"
+    return [{ "url": f"/audio/{file_id}.wav"}]
 
 
 @app.route("/audio/<path:audio_file>")

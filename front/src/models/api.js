@@ -25,3 +25,22 @@ export async function translate(text, targetLanguage = "por_Latn") {
   const data = await response.json();
   return data.translated_text;
 }
+
+export async function convertToAudio(caption) {
+  const response = await fetch("http://localhost:5000/text-to-speech", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      text: caption,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Audio generation failed");
+  }
+
+  const data = await response.json();
+  return data[0].url;
+}
